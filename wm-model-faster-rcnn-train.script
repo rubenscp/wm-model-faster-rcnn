@@ -1,0 +1,10 @@
+#PBS -N frcnn_train
+#PBS -q testegpu
+#PBS -e errors
+#PBS -m abe
+#PBS -o output
+source ~/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/bin/activate
+#source ~/research/white-mold-applications/wm-model-ssd/venv-wm-model-ssd/bin/activate
+#source /home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/bin/activate
+#module load cuda/11.5.0-intel-2022.0.1
+#python ~/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py

@@ -1,161 +1,282 @@
-"""
-Project: White Mold 
-Description: Utils methods and functions 
-Author: Rubens de Castro Pereira
-Advisors: 
-    Prof. Dr. Hélio Pedrini - advisor at IC-Unicamp
-    Prof. Dr. Díbio Leandro Borges - coadvisor at CIC-UnB
-    Prof. Dr. Murillo Lobo Jr. - coadvisor at Embrapa Rice and Beans
-Date: 20/10/2023
-Version: 1.0
-"""
-# Importing Python libraries 
+import datetime
+import errno
 import os
-import shutil
-import json 
-# import cv2
+import time
+from collections import defaultdict, deque
 
-# ###########################################
-# Constants
-# ###########################################
-LINE_FEED = '\n'
-
-class Utils:
-
-    # Create a folder
-    @staticmethod
-    def create_directory(folder):
-        if not os.path.isdir(folder):    
-            os.makedirs(folder)
-
-    # Remove all files from a folder
-    @staticmethod
-    def remove_directory(folder):
-        shutil.rmtree(folder, ignore_errors=True)
-
-    # Read list of datasets in the input folder
-    @staticmethod
-    def get_folders(input_path):
-
-        # getting list of image folders 
-        folders = [f for f in os.listdir(input_path) 
-                              if os.path.isdir(os.path.join(input_path, f))]        
-        
-        # returning list of image folders
-        return folders
-
-    # Read list of supervisely annotation files of one specific folder 
-    def get_files_with_extensions(folder, extension):
-
-        # getting list of supervisely annotation files
-        files = [f for f in os.listdir(folder) if f.endswith(extension)]
-        
-        # returning list of image folders
-        return files
-
-    # Copy one file
-    @staticmethod
-    def copy_file_same_name(filename, input_path, output_path):
-        source = os.path.join(input_path, filename)
-        destination = os.path.join(output_path, filename)
-        shutil.copy(source, destination)
-        # copy_file(input_filename=filename, input_path=input_path, output_filename=filename, output_path=output_path)
-
-    @staticmethod
-    def copy_file(input_filename, input_path, output_filename, output_path):
-        source = os.path.join(input_path, input_filename)
-        destination = os.path.join(output_path, output_filename)
-        shutil.copy(source, destination)
-
-    # Remove one file
-    @staticmethod
-    def remove_file(path_and_filename):
-        if os.path.isfile(path_and_filename): 
-            os.remove(path_and_filename) 
-
-    # # Read image 
-    # @staticmethod
-    # def read_image(filename, path):
-    #     path_and_filename = os.path.join(path, filename)
-    #     image = cv2.imread(path_and_filename)
-    #     return image
-
-    # # Save image
-    # @staticmethod
-    # def save_image(path_and_filename, image):
-    #     cv2.imwrite(path_and_filename, image)
-
-    # Save text file 
-    @staticmethod
-    def save_text_file(path_and_filename, content_of_text_file, create):
-        # setting annotation file
-        text_file = open(path_and_filename, 'w' if create else 'a+')
-
-        # write line
-        text_file.write(content_of_text_file)
-
-        # closing text file
-        text_file.close()        
-
-    # # Draw bounding box in the image
-    # @staticmethod
-    # def draw_bounding_box(image, linP1, colP1, linP2, colP2, bgrBoxColor, thickness, label):
-    #     # Start coordinate represents the top left corner of rectangle
-    #     startPoint = (colP1, linP1)
-
-    #     # Ending coordinate represents the bottom right corner of rectangle
-    #     endPoint = (colP2, linP2)
-
-    #     # Draw a rectangle with blue line borders of thickness of 2 px
-    #     image = cv2.rectangle(image, startPoint, endPoint, bgrBoxColor, thickness)
-
-    #     # setting the bounding box label
-    #     cv2.putText(image, label,
-    #                 (colP1, linP1 - 5),
-    #                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, bgrBoxColor, 2)
+import torch
+import torch.distributed as dist
 
 
-    #     # returning the image with bounding box drawn
-    #     return image
+class SmoothedValue:
+    """Track a series of values and provide access to smoothed values over a
+    window or the global series average.
+    """
 
-    # Create zip file from a directory 
-    @staticmethod
-    def zip_directory(source_directory, output_filename):
-        shutil.make_archive(output_filename, 'zip', source_directory)
+    def __init__(self, window_size=20, fmt=None):
+        if fmt is None:
+            fmt = "{median:.4f} ({global_avg:.4f})"
+        self.deque = deque(maxlen=window_size)
+        self.total = 0.0
+        self.count = 0
+        self.fmt = fmt
 
-        # Check to see if the zip file is created
-        full_output_filename = output_filename + '.zip'
-        if os.path.exists(full_output_filename):
-            return True, full_output_filename
+    def update(self, value, n=1):
+        self.deque.append(value)
+        self.count += n
+        self.total += value * n
+
+    def synchronize_between_processes(self):
+        """
+        Warning: does not synchronize the deque!
+        """
+        if not is_dist_avail_and_initialized():
+            return
+        t = torch.tensor([self.count, self.total], dtype=torch.float64, device="cuda")
+        dist.barrier()
+        dist.all_reduce(t)
+        t = t.tolist()
+        self.count = int(t[0])
+        self.total = t[1]
+
+    @property
+    def median(self):
+        d = torch.tensor(list(self.deque))
+        return d.median().item()
+
+    @property
+    def avg(self):
+        d = torch.tensor(list(self.deque), dtype=torch.float32)
+        return d.mean().item()
+
+    @property
+    def global_avg(self):
+        return self.total / self.count
+
+    @property
+    def max(self):
+        return max(self.deque)
+
+    @property
+    def value(self):
+        return self.deque[-1]
+
+    def __str__(self):
+        return self.fmt.format(
+            median=self.median, avg=self.avg, global_avg=self.global_avg, max=self.max, value=self.value
+        )
+
+
+def all_gather(data):
+    """
+    Run all_gather on arbitrary picklable data (not necessarily tensors)
+    Args:
+        data: any picklable object
+    Returns:
+        list[data]: list of data gathered from each rank
+    """
+    world_size = get_world_size()
+    if world_size == 1:
+        return [data]
+    data_list = [None] * world_size
+    dist.all_gather_object(data_list, data)
+    return data_list
+
+
+def reduce_dict(input_dict, average=True):
+    """
+    Args:
+        input_dict (dict): all the values will be reduced
+        average (bool): whether to do average or sum
+    Reduce the values in the dictionary from all processes so that all processes
+    have the averaged results. Returns a dict with the same fields as
+    input_dict, after reduction.
+    """
+    world_size = get_world_size()
+    if world_size < 2:
+        return input_dict
+    with torch.inference_mode():
+        names = []
+        values = []
+        # sort the keys so that they are consistent across processes
+        for k in sorted(input_dict.keys()):
+            names.append(k)
+            values.append(input_dict[k])
+        values = torch.stack(values, dim=0)
+        dist.all_reduce(values)
+        if average:
+            values /= world_size
+        reduced_dict = {k: v for k, v in zip(names, values)}
+    return reduced_dict
+
+
+class MetricLogger:
+    def __init__(self, delimiter="\t"):
+        self.meters = defaultdict(SmoothedValue)
+        self.delimiter = delimiter
+
+    def update(self, **kwargs):
+        for k, v in kwargs.items():
+            if isinstance(v, torch.Tensor):
+                v = v.item()
+            assert isinstance(v, (float, int))
+            self.meters[k].update(v)
+
+    def __getattr__(self, attr):
+        if attr in self.meters:
+            return self.meters[attr]
+        if attr in self.__dict__:
+            return self.__dict__[attr]
+        raise AttributeError(f"'{type(self).__name__}' object has no attribute '{attr}'")
+
+    def __str__(self):
+        loss_str = []
+        for name, meter in self.meters.items():
+            loss_str.append(f"{name}: {str(meter)}")
+        return self.delimiter.join(loss_str)
+
+    def synchronize_between_processes(self):
+        for meter in self.meters.values():
+            meter.synchronize_between_processes()
+
+    def add_meter(self, name, meter):
+        self.meters[name] = meter
+
+    def log_every(self, iterable, print_freq, header=None):
+        i = 0
+        if not header:
+            header = ""
+        start_time = time.time()
+        end = time.time()
+        iter_time = SmoothedValue(fmt="{avg:.4f}")
+        data_time = SmoothedValue(fmt="{avg:.4f}")
+        space_fmt = ":" + str(len(str(len(iterable)))) + "d"
+        if torch.cuda.is_available():
+            log_msg = self.delimiter.join(
+                [
+                    header,
+                    "[{0" + space_fmt + "}/{1}]",
+                    "eta: {eta}",
+                    "{meters}",
+                    "time: {time}",
+                    "data: {data}",
+                    "max mem: {memory:.0f}",
+                ]
+            )
         else:
-            return False, None
-        
+            log_msg = self.delimiter.join(
+                [header, "[{0" + space_fmt + "}/{1}]", "eta: {eta}", "{meters}", "time: {time}", "data: {data}"]
+            )
+        MB = 1024.0 * 1024.0
+        for obj in iterable:
+            data_time.update(time.time() - end)
+            yield obj
+            iter_time.update(time.time() - end)
+            if i % print_freq == 0 or i == len(iterable) - 1:
+                eta_seconds = iter_time.global_avg * (len(iterable) - i)
+                eta_string = str(datetime.timedelta(seconds=int(eta_seconds)))
+                if torch.cuda.is_available():
+                    print(
+                        log_msg.format(
+                            i,
+                            len(iterable),
+                            eta=eta_string,
+                            meters=str(self),
+                            time=str(iter_time),
+                            data=str(data_time),
+                            memory=torch.cuda.max_memory_allocated() / MB,
+                        )
+                    )
+                else:
+                    print(
+                        log_msg.format(
+                            i, len(iterable), eta=eta_string, meters=str(self), time=str(iter_time), data=str(data_time)
+                        )
+                    )
+            i += 1
+            end = time.time()
+        total_time = time.time() - start_time
+        total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+        print(f"{header} Total time: {total_time_str} ({total_time / len(iterable):.4f} s / it)")
 
-    # Read JSON file with execution parameters
-    @staticmethod
-    def read_json_parameters(filename):
 
-        # defining  parameters dictionary
-        parameters = {}
+def collate_fn(batch):
+    return tuple(zip(*batch))
 
-        # reading parameters file 
-        with open(filename) as json_file:
-            parameters = json.load(json_file)
 
-        # returning  parameters dictionary
-        return parameters
+def mkdir(path):
+    try:
+        os.makedirs(path)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
 
-    # Convert json boolean to python boolean 
-    def to_boolean_value(json_boolean_value):
-        boolean_value = bool(json_boolean_value == 'true')
 
-    # Create a pretty json for printing
-    @staticmethod
-    def get_pretty_json(json_text):
+def setup_for_distributed(is_master):
+    """
+    This function disables printing when not in master process
+    """
+    import builtins as __builtin__
 
-        # formatting pretty json
-        json_formatted_str = json.dumps(json_text, indent=4)
-        
-        # returning json formatted
-        return json_formatted_str
-                
+    builtin_print = __builtin__.print
+
+    def print(*args, **kwargs):
+        force = kwargs.pop("force", False)
+        if is_master or force:
+            builtin_print(*args, **kwargs)
+
+    __builtin__.print = print
+
+
+def is_dist_avail_and_initialized():
+    if not dist.is_available():
+        return False
+    if not dist.is_initialized():
+        return False
+    return True
+
+
+def get_world_size():
+    if not is_dist_avail_and_initialized():
+        return 1
+    return dist.get_world_size()
+
+
+def get_rank():
+    if not is_dist_avail_and_initialized():
+        return 0
+    return dist.get_rank()
+
+
+def is_main_process():
+    return get_rank() == 0
+
+
+def save_on_master(*args, **kwargs):
+    if is_main_process():
+        torch.save(*args, **kwargs)
+
+
+def init_distributed_mode(args):
+    if "RANK" in os.environ and "WORLD_SIZE" in os.environ:
+        args.rank = int(os.environ["RANK"])
+        args.world_size = int(os.environ["WORLD_SIZE"])
+        args.gpu = int(os.environ["LOCAL_RANK"])
+    elif "SLURM_PROCID" in os.environ:
+        args.rank = int(os.environ["SLURM_PROCID"])
+        args.gpu = args.rank % torch.cuda.device_count()
+    else:
+        print("Not using distributed mode")
+        args.distributed = False
+        return
+
+    args.distributed = True
+
+    torch.cuda.set_device(args.gpu)
+    args.dist_backend = "nccl"
+    print(f"| distributed init (rank {args.rank}): {args.dist_url}", flush=True)
+    torch.distributed.init_process_group(
+        backend=args.dist_backend, init_method=args.dist_url, world_size=args.world_size, rank=args.rank
+    )
+    torch.distributed.barrier()
+    setup_for_distributed(args.rank == 0)

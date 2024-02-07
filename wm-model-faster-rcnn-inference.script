@@ -1,0 +1,9 @@
+#PBS -N ssd_inference
+#PBS -q testegpu
+#PBS -e faster_rcnn_inference_errors 
+#PBS -m abe
+#PBS -o faster_rcnn_inference_output
+
+source ~/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/bin/activate
+module load cuda/11.5.0-intel-2022.0.1
+python ~/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_inference.py
