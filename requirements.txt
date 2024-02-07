@@ -1,0 +1,11 @@
+numpy
+matplotlib
+pandas
+opencv-python
+torch
+torchmetrics
+torchmetrics[detection]
+torchvision
+albumentations
+pyarrow
+tqdm
