@@ -1,0 +1,520 @@
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07cd0>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07eb0>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07cd0>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07e20>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07ca0>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07c10>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07fa0>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07a30>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07d60>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07c10>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07c40>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07a30>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07d90>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07d60>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07d00>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07a00>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07c70>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07fa0>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07d90>,)
+--- Logging error ---
+Traceback (most recent call last):
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 1100, in emit
+    msg = self.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 943, in format
+    return fmt.format(record)
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 678, in format
+    record.message = record.getMessage()
+  File "/opt/pub/spack/python/3.10.10/gcc/9.4.0/lib/python3.10/logging/__init__.py", line 368, in getMessage
+    msg = msg % self.args
+TypeError: not all arguments converted during string formatting
+Call stack:
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 381, in <module>
+    main()
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 118, in main
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_train.py", line 366, in train_faster_rcnn_model
+    model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/train.py", line 37, in training_model
+    coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/engine.py", line 114, in evaluate
+    logging.info("Averaged stats:", metric_logger)
+Message: 'Averaged stats:'
+Arguments: (<utils.MetricLogger object at 0x147b58a07dc0>,)

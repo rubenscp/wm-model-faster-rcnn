@@ -55,11 +55,7 @@ from manage_log import *
 from model import *
 from dataset import *
 from train import * 
-
-# # Import python code from debugger_cafe
-# from debugger_cafe.datasets import * 
-# from debugger_cafe.model import * 
-# from debugger_cafe.inference import * 
+from inference import * 
 
 # ###########################################
 # Constants
@@ -94,7 +90,7 @@ def main():
     set_input_image_folders(parameters)
 
     # getting last running id
-    get_running_id(parameters)
+    running_id = get_running_id(parameters)
 
     # setting output folder results
     set_results_folder(parameters)
@@ -113,18 +109,18 @@ def main():
 
     # creating new instance of parameters file related to current running
     save_processing_parameters(parameters_filename, parameters)
-
-    # loading dataloaders of image dataset for processing
-    # train_dataloader, valid_dataloader, test_dataloader = get_dataloaders(parameters)
-    
+   
     # copying weights file produced by training step 
     copy_weights_file(parameters)
 
+    # loading datasets and dataloaders of image dataset for processing
+    dataset_test = get_dataset_test(parameters)
+    
     # creating neural network model 
-    model = get_neural_network_model(parameters, device)
+    model = get_neural_network_model_with_custom_weights(parameters, device)
 
     # inference the neural netowrk model
-    inference_faster_rcnn_model(parameters, device, model)
+    inference_faster_rcnn_model(parameters, device, model, dataset_test)
 
 
     # printing metrics results 
@@ -212,7 +208,7 @@ def get_running_id(parameters):
     parameters['processing']['running_id'] = running_id
 
     # returning the current running id
-    # return running_id
+    return running_id
 
 def set_results_folder(parameters):
     '''
@@ -227,22 +223,22 @@ def set_results_folder(parameters):
     parameters['inference_results']['main_folder'] = main_folder
     Utils.create_directory(main_folder)
 
-    # setting and creating action folder of training
-    action_folder = os.path.join(
-        main_folder,
-        parameters['inference_results']['action_folder']
-    )
-    parameters['inference_results']['action_folder'] = action_folder
-    Utils.create_directory(action_folder)
-
     # setting and creating model folder 
     parameters['inference_results']['model_folder'] = parameters['neural_network_model']['model_name']
     model_folder = os.path.join(
-        action_folder,
+        main_folder,
         parameters['inference_results']['model_folder']
     )
     parameters['inference_results']['model_folder'] = model_folder
     Utils.create_directory(model_folder)
+
+    # setting and creating action folder
+    action_folder = os.path.join(
+        model_folder,
+        parameters['inference_results']['action_folder']
+    )
+    parameters['inference_results']['action_folder'] = action_folder
+    Utils.create_directory(action_folder)
 
     # setting and creating running folder 
     running_id = parameters['processing']['running_id']
@@ -250,7 +246,7 @@ def set_results_folder(parameters):
     input_image_size = str(parameters['input']['input_dataset']['input_image_size'])
     parameters['inference_results']['running_folder'] = running_id_text + "-" + input_image_size + 'x' + input_image_size   
     running_folder = os.path.join(
-        model_folder,
+        action_folder,
         parameters['inference_results']['running_folder']
     )
     parameters['inference_results']['running_folder'] = running_folder
@@ -333,14 +329,28 @@ def copy_weights_file(parameters):
         parameters['inference_results']['weights_folder']
     )
 
-def get_neural_network_model(parameters, device):
+def get_dataset_test(parameters):
+    '''
+    Get dataset of testing from image dataset 
+    '''
+
+    # getting dataloaders from faster rcnn dataset 
+    dataset_test, dataloader_test = get_test_datasets_and_dataloaders_faster_rcnn(parameters)
+
+    # returning dataloaders from datasets for processing 
+    return dataset_test
+
+def get_neural_network_model_with_custom_weights(parameters, device):
     '''
     Get neural network model
     '''      
 
-    # get model 
-    model = get_object_detection_model(parameters['neural_network_model']['classes'])
+    # getting model 
+    model = get_object_detection_model(len(parameters['neural_network_model']['classes']))
        
+    # loading weights into the model from training step
+    load_weigths_into_model(parameters, model)
+    
     logging.info(f'Moving model to device: {device}')
     model = model.to(device)
 
@@ -351,11 +361,11 @@ def get_neural_network_model(parameters, device):
     # returning neural network model
     return model
 
-def inference_faster_rcnn_model(parameters, device, model):
+def inference_faster_rcnn_model(parameters, device, model, dataset_test):
     '''
     Execute inference of the neural network model
     '''
-    # model = training_model(parameters, model, device, train_dataloader, valid_dataloader):
+    inference_faster_rcnn_model_with_dataset_test(parameters, model, device, dataset_test)
 
 
 # ###########################################

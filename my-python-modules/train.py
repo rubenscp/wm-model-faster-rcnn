@@ -2,6 +2,8 @@ import torch
 
 from engine import train_one_epoch, evaluate
 
+# Importing python modules
+from manage_log import *
 
 def training_model(parameters, model, device, data_loader_train, data_loader_valid):
   

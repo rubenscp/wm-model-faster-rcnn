@@ -1,4 +1,5 @@
 import datetime
+from datetime import date, timedelta
 import errno
 import os
 import time
@@ -7,6 +8,8 @@ from collections import defaultdict, deque
 import torch
 import torch.distributed as dist
 
+# Importing python modules
+from manage_log import *
 
 class SmoothedValue:
     """Track a series of values and provide access to smoothed values over a
@@ -174,9 +177,13 @@ class MetricLogger:
             iter_time.update(time.time() - end)
             if i % print_freq == 0 or i == len(iterable) - 1:
                 eta_seconds = iter_time.global_avg * (len(iterable) - i)
-                eta_string = str(datetime.timedelta(seconds=int(eta_seconds)))
+
+                # By Rubens
+                # eta_string = str(datetime.timedelta(seconds=int(eta_seconds)))
+                eta_string = str(int(eta_seconds))
                 if torch.cuda.is_available():
-                    print(
+                    # print(
+                    logging.info(
                         log_msg.format(
                             i,
                             len(iterable),
@@ -188,7 +195,8 @@ class MetricLogger:
                         )
                     )
                 else:
-                    print(
+                    # print(
+                    logging.info(
                         log_msg.format(
                             i, len(iterable), eta=eta_string, meters=str(self), time=str(iter_time), data=str(data_time)
                         )
@@ -196,8 +204,12 @@ class MetricLogger:
             i += 1
             end = time.time()
         total_time = time.time() - start_time
-        total_time_str = str(datetime.timedelta(seconds=int(total_time)))
-        print(f"{header} Total time: {total_time_str} ({total_time / len(iterable):.4f} s / it)")
+
+        # By Rubens
+        # total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+        total_time_str = str(int(total_time))        
+        # print(f"{header} Total time: {total_time_str} ({total_time / len(iterable):.4f} s / it)")
+        logging.info(f"{header} Total time: {total_time_str} ({total_time / len(iterable):.4f} s / it)")
 
 
 def collate_fn(batch):

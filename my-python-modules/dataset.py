@@ -8,6 +8,9 @@ from augmentation import *
 import utils 
 # from utils import *
 
+# Importing python modules
+from manage_log import *
+
 class WhiteMoldImagesDatasetFRCNN(torch.utils.data.Dataset):
 
     def __init__(self, files_dir, width, height, classes, transforms=None):
@@ -38,8 +41,8 @@ class WhiteMoldImagesDatasetFRCNN(torch.utils.data.Dataset):
         img_res /= 255.0
 
         # annotation file
-        # annot_filename = img_name[:-4] + '.xml'
-        annot_filename = img_name + '.xml'
+        annot_filename = img_name[:-4] + '.xml'
+        # annot_filename = img_name + '.xml'
         annot_file_path = os.path.join(self.files_dir, annot_filename)
 
         boxes = []
@@ -112,13 +115,13 @@ class WhiteMoldImagesDatasetFRCNN(torch.utils.data.Dataset):
 # img, target = dataset_to_check[78]
 # print(img.shape, '\n',target)
     
-def get_dataloaders_faster_rcnn(parameters):
+def get_train_and_valid_datasets_and_dataloaders_faster_rcnn(parameters):
 
     # setting parameters value 
     width  = parameters['input']['input_dataset']['input_image_size']
     height = parameters['input']['input_dataset']['input_image_size']
     batch_size = parameters['neural_network_model']['batch_size']
-    number_workers = parameters['neural_network_model']['number_workers']
+    number_workers = parameters['neural_network_model']['number_workers']    
 
     # use our dataset and defined transformations
     dataset_train = WhiteMoldImagesDatasetFRCNN(
@@ -133,35 +136,43 @@ def get_dataloaders_faster_rcnn(parameters):
         classes=parameters['neural_network_model']['classes'],
         transforms= get_transform(train=False))
     
+    # dataset_test  = get_test_datasets_and_dataloaders_faster_rcnn(parameters)
+   
+    # define training and validation data loaders
+    dataloader_train = torch.utils.data.DataLoader(
+        dataset_train, batch_size=batch_size, shuffle=True, num_workers=number_workers,
+        collate_fn=utils.collate_fn)
+
+    dataloader_valid = torch.utils.data.DataLoader(
+        dataset_valid, batch_size=batch_size, shuffle=False, num_workers=number_workers,
+        collate_fn=utils.collate_fn)
+   
+    return dataset_train, dataset_valid, dataloader_train, dataloader_valid
+
+
+def get_test_datasets_and_dataloaders_faster_rcnn(parameters):
+
+    # setting parameters value 
+    width  = parameters['input']['input_dataset']['input_image_size']
+    height = parameters['input']['input_dataset']['input_image_size']
+    batch_size = parameters['neural_network_model']['batch_size']
+    number_workers = parameters['neural_network_model']['number_workers']
+
+    # use our dataset and defined transformations    
     dataset_test  = WhiteMoldImagesDatasetFRCNN(
         parameters['processing']['image_dataset_folder_test'], 
         width=width, height=height,
         classes=parameters['neural_network_model']['classes'],
         transforms= get_transform(train=False))
 
-    # split the dataset in train and test set
-    torch.manual_seed(1)
-    indices = torch.randperm(len(dataset_train)).tolist()
-
-    # train valid split
-    # valid_split = 0.2
-    # valid_size = int(len(dataset_train) * valid_split)
-    # dataset_train = torch.utils.data.Subset(dataset_train, indices[:-valid_size])
-    # dataset_valid = torch.utils.data.Subset(dataset_valid, indices[-valid_size:])
-
-    # define training and validation data loaders
-    data_loader_train = torch.utils.data.DataLoader(
-        dataset_train, batch_size=batch_size, shuffle=True, num_workers=number_workers,
+    # print(f'Test dataset size >> dentro do dataset.py: {len(dataset_test)}')
+    # print(f'len(dataset_test): {len(dataset_test)}')        
+    # print(f'len(dataset_test.classes): {len(dataset_test.classes)}')      
+    
+    dataloader_test = torch.utils.data.DataLoader(
+        dataset_test, batch_size=batch_size, shuffle=False, num_workers=number_workers,
         collate_fn=utils.collate_fn)
 
-    data_loader_valid = torch.utils.data.DataLoader(
-        dataset_valid, batch_size=batch_size, shuffle=False, num_workers=number_workers,
-        collate_fn=utils.collate_fn)
-
-    print(f'Creating dataloaders from image datasets:')
-    print()
-    print(f'Train: {len(data_loader_train.dataset)}')
-    print(f'Valid: {len(data_loader_valid.dataset)}')
-    print(f'Test : {len(dataset_test)}')
-
-    return data_loader_train, data_loader_valid
+   
+    # returning test datasets and dataloaders    
+    return dataset_test, dataloader_test

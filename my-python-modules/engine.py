@@ -9,6 +9,9 @@ from coco_eval import CocoEvaluator
 from coco_utils import get_coco_api_from_dataset
 
 
+# Importing python modules
+from manage_log import *
+
 def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, scaler=None):
     model.train()
     metric_logger = utils.MetricLogger(delimiter="  ")
@@ -38,8 +41,10 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
         loss_value = losses_reduced.item()
 
         if not math.isfinite(loss_value):
-            print(f"Loss is {loss_value}, stopping training")
-            print(loss_dict_reduced)
+            # print(f"Loss is {loss_value}, stopping training")
+            # print(loss_dict_reduced)
+            logging.info(f"Loss is {loss_value}, stopping training")
+            logging.info(loss_dict_reduced)
             sys.exit(1)
 
         optimizer.zero_grad()
@@ -105,7 +110,8 @@ def evaluate(model, data_loader, device):
 
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
-    print("Averaged stats:", metric_logger)
+    # print("Averaged stats:", metric_logger)
+    logging.info("Averaged stats:", metric_logger)
     coco_evaluator.synchronize_between_processes()
 
     # accumulate predictions from all images

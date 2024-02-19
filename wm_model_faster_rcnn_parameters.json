@@ -3,19 +3,20 @@
         "input_dataset": {
             "input_image_size": 300,
             "annotation_format": "faster_rcnn",
-            "input_dataset_path": "white-mold-dataset/03-splitting_by_images/03.2-output-dataset"
+            "input_dataset_path": "white-mold-dataset/results-pre-processed-images/running-0111-03ds/splitting_by_images/2-output-dataset"
         },
         "inference": {
             "weights_folder": "/home/lovelace/proj/proj939/rubenscp/research/white-mold-inference-weights",
-            "weights_filename": "xxxxxxxxxxxxxxxxxx-best_model.pth"
+            "weights_filename": "faster-rcnn-resnet-50-fpn-running-0002-300x300.pth"
         }
     },
+
     "neural_network_model": {
         "model_name": "faster-rcnn-resnet-50-fpn",
         "number_epochs": 20,
         "batch_size": 16,
         "resize_of_input_image": 300,
-        "threshold": 0.5,
+        "threshold": 0.1,
         "number_workers": 2,
         "classes": [
             "__background__", "Apothecium", "Imature Sclerotium", "Mature Sclerotium", "White Mold", "class 5", "class 6", "class 7", "class 8", "class 9", "class 10",
@@ -34,8 +35,10 @@
         "gamma": 0.1,
         "momentum": 0.9,
         "weight_decay": 0.0005,
-        "step_size": 3
+        "step_size": 3,
+        "iou_threshold": 0.01
     },
+
     "processing": {
         "research_root_folder": "/home/lovelace/proj/proj939/rubenscp/research",
         "project_name_folder": "white-mold-applications/wm-model-faster-rcnn",
@@ -46,22 +49,25 @@
         "image_dataset_folder_valid": "defined during training/inference ",
         "image_dataset_folder_test": "defined during training/inference "
     },
+
     "training_results": {
         "main_folder": "white-mold-results",
-        "action_folder": "training",
         "model_folder": "defined during training/inference",
+        "action_folder": "training",
         "running_folder": "defined during training/inference",
         "processing_parameters_folder": "processing-parameters",
         "weights_folder": "weights",
         "weights_base_filename": "",
+        "full_model_base_filename": "",
         "metrics_folder": "metrics",
         "log_folder": "log",
         "log_filename": "wm-model-faster_rcnn-train"
     },
+    
     "inference_results": {
         "main_folder": "white-mold-results",
-        "action_folder": "inference",
         "model_folder": "defined during training/inference",
+        "action_folder": "inference",
         "running_folder": "defined during training/inference",
         "processing_parameters_folder": "processing-parameters",
         "weights_folder": "weights",

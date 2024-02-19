@@ -130,7 +130,6 @@ class Utils:
         else:
             return False, None
         
-
     # Read JSON file with execution parameters
     @staticmethod
     def read_json_parameters(filename):

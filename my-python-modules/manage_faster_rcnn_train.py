@@ -90,7 +90,7 @@ def main():
     set_input_image_folders(parameters)
 
     # getting last running id
-    get_running_id(parameters)
+    running_id = get_running_id(parameters)
 
     # setting output folder results
     set_results_folder(parameters)
@@ -108,15 +108,18 @@ def main():
     # creating new instance of parameters file related to current running
     save_processing_parameters(parameters_filename, parameters)
 
-    # loading dataloaders of image dataset for processing
-    train_dataloader, valid_dataloader, test_dataloader = get_dataloaders(parameters)
+    # loading datasets and dataloaders of image dataset for processing
+    dataset_train, dataset_valid, dataloader_train, dataloader_valid = get_datasets_and_dataloaders(parameters)
     
     # creating neural network model 
     model = get_neural_network_model(parameters, device)
 
     # training neural netowrk model
-    # train_faster_rcnn_model(parameters, device, model, train_dataloader, valid_dataloader)
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
 
+    # saving trained model and weights 
+    save_model_and_weights(model, parameters)
+    
     # printing metrics results
     
 
@@ -204,8 +207,8 @@ def get_running_id(parameters):
     # updating running id in the processing parameters 
     parameters['processing']['running_id'] = running_id
 
-    # returning the current running id
-    # return running_id
+    # returning running id 
+    return running_id
 
 def set_results_folder(parameters):
     '''
@@ -220,22 +223,22 @@ def set_results_folder(parameters):
     parameters['training_results']['main_folder'] = main_folder
     Utils.create_directory(main_folder)
 
-    # setting and creating action folder of training
-    action_folder = os.path.join(
-        main_folder,
-        parameters['training_results']['action_folder']
-    )
-    parameters['training_results']['action_folder'] = action_folder
-    Utils.create_directory(action_folder)
-
     # setting and creating model folder 
     parameters['training_results']['model_folder'] = parameters['neural_network_model']['model_name']
     model_folder = os.path.join(
-        action_folder,
+        main_folder,
         parameters['training_results']['model_folder']
     )
     parameters['training_results']['model_folder'] = model_folder
     Utils.create_directory(model_folder)
+
+    # setting and creating action folder of training
+    action_folder = os.path.join(
+        model_folder,
+        parameters['training_results']['action_folder']
+    )
+    parameters['training_results']['action_folder'] = action_folder
+    Utils.create_directory(action_folder)
 
     # setting and creating running folder 
     running_id = parameters['processing']['running_id']
@@ -243,7 +246,7 @@ def set_results_folder(parameters):
     input_image_size = str(parameters['input']['input_dataset']['input_image_size'])
     parameters['training_results']['running_folder'] = running_id_text + "-" + input_image_size + 'x' + input_image_size   
     running_folder = os.path.join(
-        model_folder,
+        action_folder,
         parameters['training_results']['running_folder']
     )
     parameters['training_results']['running_folder'] = running_folder
@@ -268,6 +271,10 @@ def set_results_folder(parameters):
     weights_base_filename = parameters['neural_network_model']['model_name'] + '-' + \
                             running_id_text + "-" + input_image_size + 'x' + input_image_size
     parameters['training_results']['weights_base_filename'] = weights_base_filename
+    full_model_base_filename = \
+        'full_model_' + parameters['neural_network_model']['model_name'] + '-' + \
+        running_id_text + "-" + input_image_size + 'x' + input_image_size
+    parameters['training_results']['full_model_base_filename'] = full_model_base_filename
 
     metrics_folder = os.path.join(
         running_folder,
@@ -313,9 +320,9 @@ def save_processing_parameters(parameters_filename, parameters):
                         Utils.get_pretty_json(parameters), 
                         NEW_FILE)
 
-def get_dataloaders(parameters):
+def get_datasets_and_dataloaders(parameters):
     '''
-    Get dataloaders of training, validation and testing from image dataset 
+    Get datasets and dataloaders of training, validation and testing from image dataset 
     '''
 
     # logging.info(f'Getting datasets')
@@ -329,19 +336,18 @@ def get_dataloaders(parameters):
     # logging.info(f'Number of validation images: {len(valid_dataloader)}')
 
     # getting dataloaders from faster rcnn dataset 
-    train_dataloader, valid_dataloader = get_dataloaders_faster_rcnn(parameters)
-    test_dataloader = None
+    dataset_train, dataset_valid, dataloader_train, dataloader_valid = get_train_and_valid_datasets_and_dataloaders_faster_rcnn(parameters)
 
     # returning dataloaders from datasets for processing 
-    return train_dataloader, valid_dataloader, test_dataloader 
+    return dataset_train, dataset_valid, dataloader_train, dataloader_valid
 
 def get_neural_network_model(parameters, device):
     '''
     Get neural network model
     '''      
     
-    # get model 
-    model = get_object_detection_model(parameters['neural_network_model']['classes'])
+    # get model    
+    model = get_object_detection_model(len(parameters['neural_network_model']['classes']))
      
     logging.info(f'Moving model to device: {device}')
     model = model.to(device)
@@ -358,6 +364,9 @@ def train_faster_rcnn_model(parameters, device, model, train_dataloader, valid_d
     Execute training of the neural network model
     '''
     model = training_model(parameters, model, device, train_dataloader, valid_dataloader)
+
+    # return trained model 
+    return model 
 
 
 # ###########################################

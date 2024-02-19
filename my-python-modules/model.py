@@ -1,5 +1,9 @@
+import torch 
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
+
+# Importing python modules
+from manage_log import *
 
 def get_object_detection_model(num_classes):
 
@@ -14,3 +18,47 @@ def get_object_detection_model(num_classes):
 
     # returning the model object created
     return model
+
+def save_model_and_weights(model, parameters): 
+
+    # saving model after training in the hard drive of virtual machine
+    # now = datetime.now()
+
+    # formatted_now = str(formatted_now).replace('-','_').replace(' ','_').replace(':','_').replace('.','_')
+    # formatted_now = now.strftime("%Y_%m_%d_%Hh_%Mm")
+
+    path_and_full_model_base_filename = os.path.join(
+        parameters['training_results']['weights_folder'],
+        parameters['training_results']['full_model_base_filename'] + '.pth'
+    )
+
+    # model_filename = FASTER_RCNN_MODEL_FILENAME + '_' + formatted_now + FASTER_RCNN_MODEL_EXTENSION_FILENAME
+    # local_faster_rcnn_entire_model_path_and_filename = os.path.join(local_results_faster_rcnn_path, model_filename)
+    torch.save(model, path_and_full_model_base_filename)
+    logging_info(f'Faster R-CNN entire model saved at: {path_and_full_model_base_filename}')
+    logging_info(f'')
+
+    path_and_weights_base_filename = os.path.join(
+        parameters['training_results']['weights_folder'],
+        parameters['training_results']['weights_base_filename'] + '.pth'
+    )
+    # weights_filename = FASTER_RCNN_MODEL_WEIGHTS_FILENAME + '_' + formatted_now + FASTER_RCNN_MODEL_EXTENSION_FILENAME
+    # local_faster_rcnn_weigths_path_and_filename = os.path.join(local_results_faster_rcnn_path, weights_filename)
+    torch.save(model.state_dict(), path_and_weights_base_filename)
+    logging_info(f'Faster R-CNN weights (state_dict()saved at: {path_and_weights_base_filename}')
+
+def load_weigths_into_model(parameters, model):
+
+    # setting path and wieghts filename used to load into the model 
+    path_and_weights_filename = os.path.join(
+        parameters['input']['inference']['weights_folder'],
+        parameters['input']['inference']['weights_filename'],
+    )
+    
+    logging_info(f'Loading weights into the model from training step: {path_and_weights_filename}')
+
+    # loading weights
+    weights = torch.load(path_and_weights_filename)
+
+    # setting weights into the model 
+    model.load_state_dict(weights)
