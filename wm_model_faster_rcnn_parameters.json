@@ -3,11 +3,11 @@
         "input_dataset": {
             "input_image_size": 300,
             "annotation_format": "faster_rcnn",
-            "input_dataset_path": "white-mold-dataset/results-pre-processed-images/running-0111-03ds/splitting_by_images/2-output-dataset"
+            "input_dataset_path": "white-mold-dataset/results-pre-processed-images/running-0113-15ds/splitting_by_images/2-output-dataset"
         },
         "inference": {
             "weights_folder": "/home/lovelace/proj/proj939/rubenscp/research/white-mold-inference-weights",
-            "weights_filename": "faster-rcnn-resnet-50-fpn-running-0002-300x300.pth"
+            "weights_filename": "faster-rcnn-resnet-50-fpn-running-0001-300x300.pth"
         }
     },
 

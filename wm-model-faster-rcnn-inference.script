@@ -1,5 +1,5 @@
 #PBS -N frcnn_inference 
-#PBS -q miggpu 
+#PBS -q testegpu 
 #PBS -m abe 
 #PBS -e frcnn_inference_errors 
 #PBS -o frcnn_inference_output 
