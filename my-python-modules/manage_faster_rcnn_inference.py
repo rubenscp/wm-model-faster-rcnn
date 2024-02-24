@@ -55,7 +55,9 @@ from manage_log import *
 from model import *
 from dataset import *
 from train import * 
-from inference import * 
+from inference import *
+from tasks import Tasks
+from entity.AnnotationsStatistic import AnnotationsStatistic
 
 # ###########################################
 # Constants
@@ -79,57 +81,92 @@ def main():
 
     """
 
+    # creating Tasks object 
+    processing_tasks = Tasks()
+
     # setting dictionary initial parameters for processing
     full_path_project = '/home/lovelace/proj/proj939/rubenscp/research/white-mold-applications/wm-model-faster-rcnn'
 
     # getting application parameters 
+    processing_tasks.start_task('Getting application parameters')
     parameters_filename = 'wm_model_faster_rcnn_parameters.json'
     parameters = get_parameters(full_path_project, parameters_filename)
+    processing_tasks.finish_task('Getting application parameters')
 
     # setting new values of parameters according of initial parameters
+    processing_tasks.start_task('Setting input image folders')
     set_input_image_folders(parameters)
+    processing_tasks.finish_task('Setting input image folders')
 
     # getting last running id
+    processing_tasks.start_task('Getting running id')
     running_id = get_running_id(parameters)
+    processing_tasks.finish_task('Getting running id')
 
     # setting output folder results
+    processing_tasks.start_task('Setting result folders')
     set_results_folder(parameters)
+    processing_tasks.finish_task('Setting result folders')
     
     # creating log file 
+    processing_tasks.start_task('Creating log file')
     logging_create_log(
         parameters['inference_results']['log_folder'], 
         parameters['inference_results']['log_filename']
     )
+    processing_tasks.finish_task('Creating log file')
 
     logging_info('White Mold Research')
     logging_info('Inference of the model Faster RCNN' + LINE_FEED)
 
     # getting device CUDA
+    processing_tasks.start_task('Getting device CUDA')
     device = get_device(parameters)
+    processing_tasks.finish_task('Getting device CUDA')
 
     # creating new instance of parameters file related to current running
+    processing_tasks.start_task('Saving processing parameters')
     save_processing_parameters(parameters_filename, parameters)
-   
+    processing_tasks.finish_task('Saving processing parameters')
+  
     # copying weights file produced by training step 
+    processing_tasks.start_task('Copying weigts file used in inference')
     copy_weights_file(parameters)
+    processing_tasks.finish_task('Copying weigts file used in inference')
 
     # loading datasets and dataloaders of image dataset for processing
+    processing_tasks.start_task('Getting teste image dataset')
     dataset_test = get_dataset_test(parameters)
+    processing_tasks.finish_task('Getting teste image dataset')
     
     # creating neural network model 
+    processing_tasks.start_task('Creating neural network model')
     model = get_neural_network_model_with_custom_weights(parameters, device)
+    processing_tasks.finish_task('Creating neural network model')
+
+    # getting statistics of input dataset 
+    processing_tasks.start_task('Getting statistics of input dataset')
+    annotation_statistics = get_input_dataset_statistics(parameters)
+    show_input_dataset_statistics(annotation_statistics)
+    processing_tasks.finish_task('Getting statistics of input dataset')
 
     # inference the neural netowrk model
+    processing_tasks.start_task('Running inference of test images dataset')
     inference_faster_rcnn_model(parameters, device, model, dataset_test)
-
+    processing_tasks.finish_task('Running inference of test images dataset')
 
     # printing metrics results 
     
+    # showing input dataset statistics
+    show_input_dataset_statistics(annotation_statistics)
 
     # finishing model training 
     logging_info('')
     logging_info('Finished the inference of the model Faster RCNN' + LINE_FEED)
 
+    # printing tasks summary 
+    processing_tasks.finish_processing()
+    logging_info(processing_tasks.to_string())
 
 # ###########################################
 # Methods of Level 2
@@ -360,6 +397,18 @@ def get_neural_network_model_with_custom_weights(parameters, device):
 
     # returning neural network model
     return model
+
+# getting statistics of input dataset 
+def get_input_dataset_statistics(parameters):
+    
+    annotation_statistics = AnnotationsStatistic()
+    annotation_statistics.processing_statistics(parameters)
+    return annotation_statistics
+    
+def show_input_dataset_statistics(annotation_statistics):
+
+    logging_info(f'Input dataset statistic')
+    logging_info(annotation_statistics.to_string())
 
 def inference_faster_rcnn_model(parameters, device, model, dataset_test):
     '''

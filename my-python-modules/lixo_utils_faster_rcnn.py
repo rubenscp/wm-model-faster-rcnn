@@ -97,25 +97,6 @@ class Utils:
         # closing text file
         text_file.close()        
 
-    # Read text file 
-    @staticmethod
-    def read_text_file(path_and_filename):
-        # setting annotation file
-        text_file = open(path_and_filename, 'r')
-
-        # reading the file 
-        lines = text_file.readlines()
-
-        # replacing end of line('/n') with ''
-        data_into_list = [line.replace('\n','') for line in lines]
-        
-        # closing text file
-        text_file.close()        
-
-        # returning text in list format 
-        return data_into_list
-
-
     # # Draw bounding box in the image
     # @staticmethod
     # def draw_bounding_box(image, linP1, colP1, linP2, colP2, bgrBoxColor, thickness, label):
@@ -149,7 +130,6 @@ class Utils:
         else:
             return False, None
         
-
     # Read JSON file with execution parameters
     @staticmethod
     def read_json_parameters(filename):
@@ -177,26 +157,4 @@ class Utils:
         
         # returning json formatted
         return json_formatted_str
-
-    # Get filename from full string 
-    @staticmethod
-    def get_filename(path_and_filename):
-        # getting filename with extension
-        index_1 = path_and_filename.rfind('/')
-        path = path_and_filename[:index_1]
-        filename_with_extension = path_and_filename[index_1 + 1:]
-
-        # getting just the filename and the extension separated
-        index_2 = path_and_filename.rfind('.')
-        filename = path_and_filename[index_1 + 1:index_2]
-        extension = path_and_filename[index_2 + 1:]
-
-        # print(f'path_and_filename:       {path_and_filename}')
-        # print(f'path:                    {path}')
-        # print(f'filename_with_extension: {filename_with_extension}')
-        # print(f'filename:                {filename}')
-        # print(f'extension:               {extension}')
-
-        # returning filename with extension, just filename and the extension 
-        return path, filename_with_extension, filename, extension
-                        
+                

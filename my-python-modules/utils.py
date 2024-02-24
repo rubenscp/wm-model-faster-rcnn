@@ -183,7 +183,7 @@ class MetricLogger:
                 eta_string = str(int(eta_seconds))
                 if torch.cuda.is_available():
                     # print(
-                    logging.info(
+                    logging_info(
                         log_msg.format(
                             i,
                             len(iterable),
@@ -196,7 +196,7 @@ class MetricLogger:
                     )
                 else:
                     # print(
-                    logging.info(
+                    logging_info(
                         log_msg.format(
                             i, len(iterable), eta=eta_string, meters=str(self), time=str(iter_time), data=str(data_time)
                         )
@@ -209,7 +209,7 @@ class MetricLogger:
         # total_time_str = str(datetime.timedelta(seconds=int(total_time)))
         total_time_str = str(int(total_time))        
         # print(f"{header} Total time: {total_time_str} ({total_time / len(iterable):.4f} s / it)")
-        logging.info(f"{header} Total time: {total_time_str} ({total_time / len(iterable):.4f} s / it)")
+        logging_info(f"{header} Total time: {total_time_str} ({total_time / len(iterable):.4f} s / it)")
 
 
 def collate_fn(batch):

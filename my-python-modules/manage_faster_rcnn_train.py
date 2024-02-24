@@ -56,6 +56,7 @@ from model import *
 from dataset import *
 from train import * 
 from tasks import Tasks
+from entity.AnnotationsStatistic import AnnotationsStatistic
 
 # ###########################################
 # Constants
@@ -144,9 +145,15 @@ def main():
     model = get_neural_network_model(parameters, device)
     processing_tasks.finish_task('Creating neural network model')
 
+    # getting statistics of input dataset 
+    processing_tasks.start_task('Getting statistics of input dataset')
+    annotation_statistics = get_input_dataset_statistics(parameters)
+    show_input_dataset_statistics(annotation_statistics)
+    processing_tasks.finish_task('Getting statistics of input dataset')
+
     # training neural netowrk model
     processing_tasks.start_task('Training neural netowrk model')
-    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+    # model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
     processing_tasks.finish_task('Training neural netowrk model')
 
     # saving trained model and weights 
@@ -156,6 +163,8 @@ def main():
     
     # printing metrics results
     
+    # showing input dataset statistics
+    show_input_dataset_statistics(annotation_statistics)
 
     # finishing model training 
     logging_info('')
@@ -396,6 +405,19 @@ def get_neural_network_model(parameters, device):
 
     # returning neural network model
     return model
+
+    # getting statistics of input dataset 
+def get_input_dataset_statistics(parameters):
+    
+    annotation_statistics = AnnotationsStatistic()
+    annotation_statistics.processing_statistics(parameters)
+    return annotation_statistics
+    
+def show_input_dataset_statistics(annotation_statistics):
+
+    logging_info(f'Input dataset statistic')
+    logging_info(annotation_statistics.to_string())
+
 
 def train_faster_rcnn_model(parameters, device, model, train_dataloader, valid_dataloader):
     '''

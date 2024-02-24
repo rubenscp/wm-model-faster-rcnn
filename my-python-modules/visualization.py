@@ -29,7 +29,7 @@ def plot_img_bbox(img, target, threshold=0.5, path_and_filename_image='', classe
             scores = target["scores"].numpy()
             score = scores[ind_score]
             if score < threshold:
-                print(f'score {score} less than threshold {threshold}')
+                logging_info(f'score {score} less than threshold {threshold}')
                 continue
 
         x, y, width, height  = box[0], box[1], box[2]-box[0], box[3]-box[1]

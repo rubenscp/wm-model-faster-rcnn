@@ -1,5 +1,5 @@
 #PBS -N frcnn_train
-#PBS -q umagpu
+#PBS -q testegpu
 #PBS -m abe
 #PBS -e frcnn_train_errors 
 #PBS -o frcnn_train_output

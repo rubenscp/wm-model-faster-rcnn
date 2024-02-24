@@ -55,7 +55,7 @@ class CocoEvaluator:
     def summarize(self):
         for iou_type, coco_eval in self.coco_eval.items():
             # print(f"IoU metric: {iou_type}")
-            logging.info(f"IoU metric: {iou_type}")
+            logging_info(f"IoU metric: {iou_type}")
             coco_eval.summarize()
 
     def prepare(self, predictions, iou_type):

@@ -7,3 +7,5 @@ torchvision
 pyarrow
 pycocotools
 albumentations
+lxml
+dict2xml
