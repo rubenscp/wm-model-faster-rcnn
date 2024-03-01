@@ -55,7 +55,7 @@ class AnnotationsStatistic:
             )
 
         elif parameters['input']['input_dataset']['annotation_format'] == 'faster_rcnn':
-            self.process_ssd_pascal_voc_model(
+            self.process_ssd_pascal_voc_format(
                             annotation_format, input_image_size, classes,
                             image_dataset_folder_train,
                             image_dataset_folder_valid, 

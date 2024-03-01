@@ -153,7 +153,7 @@ def main():
 
     # training neural netowrk model
     processing_tasks.start_task('Training neural netowrk model')
-    # model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
+    model = train_faster_rcnn_model(parameters, device, model, dataloader_train, dataloader_valid)
     processing_tasks.finish_task('Training neural netowrk model')
 
     # saving trained model and weights 
