@@ -51,12 +51,13 @@ import transforms as T
 # from albumentations.pytorch.transforms import ToTensorV2
 
 # Importing python modules
-from manage_log import *
 from model import *
 from dataset import *
 from train import * 
-from tasks import Tasks
-from entity.AnnotationsStatistic import AnnotationsStatistic
+
+from common.manage_log import *
+from common.tasks import Tasks
+from common.entity.AnnotationsStatistic import AnnotationsStatistic
 
 # ###########################################
 # Constants
@@ -146,10 +147,11 @@ def main():
     processing_tasks.finish_task('Creating neural network model')
 
     # getting statistics of input dataset 
-    processing_tasks.start_task('Getting statistics of input dataset')
-    annotation_statistics = get_input_dataset_statistics(parameters)
-    show_input_dataset_statistics(annotation_statistics)
-    processing_tasks.finish_task('Getting statistics of input dataset')
+    if parameters['processing']['show_statistics_of_input_dataset']:
+        processing_tasks.start_task('Getting statistics of input dataset')
+        annotation_statistics = get_input_dataset_statistics(parameters)
+        show_input_dataset_statistics(parameters, annotation_statistics)
+        processing_tasks.finish_task('Getting statistics of input dataset')  
 
     # training neural netowrk model
     processing_tasks.start_task('Training neural netowrk model')
@@ -164,7 +166,7 @@ def main():
     # printing metrics results
     
     # showing input dataset statistics
-    show_input_dataset_statistics(annotation_statistics)
+    # show_input_dataset_statistics(annotation_statistics)
 
     # finishing model training 
     logging_info('')
@@ -187,19 +189,8 @@ def get_parameters(full_path_project, parameters_filename):
     path_and_parameters_filename = os.path.join(full_path_project, parameters_filename)
     parameters = Utils.read_json_parameters(path_and_parameters_filename)
 
-
-    # logging processing parameters 
-    # logging_info(Utils.get_pretty_json(parameters) + LINE_FEED)   
-    
-    # saving current processing parameters in the log folder 
-    # path_and_parameters_filename = os.path.join('log', log_filename + "-" + parameters_filename)
-    # Utils.save_text_file(path_and_parameters_filename, \
-    #                     Utils.get_pretty_json(parameters), 
-    #                     NEW_FILE)
-
     # returning parameters 
     return parameters
-
 
 def set_input_image_folders(parameters):
     '''
@@ -410,13 +401,26 @@ def get_neural_network_model(parameters, device):
 def get_input_dataset_statistics(parameters):
     
     annotation_statistics = AnnotationsStatistic()
-    annotation_statistics.processing_statistics(parameters)
+    steps = ['train', 'valid', 'test'] 
+    annotation_statistics.processing_statistics(parameters, steps)
     return annotation_statistics
     
-def show_input_dataset_statistics(annotation_statistics):
-
+def show_input_dataset_statistics(parameters, annotation_statistics):
     logging_info(f'Input dataset statistic')
     logging_info(annotation_statistics.to_string())
+    path_and_filename = os.path.join(
+        parameters['training_results']['metrics_folder'],
+        parameters['neural_network_model']['model_name'] + '_annotations_statistics.xlsx',
+    )
+    annotation_format = parameters['input']['input_dataset']['annotation_format']
+    input_image_size = parameters['input']['input_dataset']['input_image_size']
+    classes = (parameters['neural_network_model']['classes'])[1:5]
+    annotation_statistics.save_annotations_statistics(
+        path_and_filename,
+        annotation_format,
+        input_image_size,
+        classes
+    )
 
 
 def train_faster_rcnn_model(parameters, device, model, train_dataloader, valid_dataloader):

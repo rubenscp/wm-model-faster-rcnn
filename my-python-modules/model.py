@@ -3,7 +3,7 @@ import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
 # Importing python modules
-from manage_log import *
+from common.manage_log import *
 
 def get_object_detection_model(num_classes):
 

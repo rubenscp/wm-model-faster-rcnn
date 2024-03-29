@@ -10,7 +10,7 @@ from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
 
 # Importing python modules
-from manage_log import *
+from common.manage_log import *
 
 class CocoEvaluator:
     def __init__(self, coco_gt, iou_types):

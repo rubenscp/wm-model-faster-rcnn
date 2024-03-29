@@ -3,20 +3,20 @@
         "input_dataset": {
             "input_image_size": 300,
             "annotation_format": "faster_rcnn",
-            "input_dataset_path": "white-mold-dataset/results-pre-processed-images/running-0003-15ds/splitting_by_images/2-output-dataset"
+            "input_dataset_path": "white-mold-dataset/results-pre-processed-images/running-0003-15ds-300x300/splitting_by_images/2-output-dataset"
         },
         "inference": {
-            "weights_folder": "/home/lovelace/proj/proj939/rubenscp/research/white-mold-inference-weights",
-            "weights_filename": "faster-rcnn-resnet-50-fpn-running-0002-300x300.pth"
+            "weights_folder": "/home/lovelace/proj/proj939/rubenscp/research/white-mold-inference-weights/training-300x300-with-100-epochs",
+            "weights_filename": "faster-rcnn-resnet-50-fpn-running-0045-300x300.pth"
         }
     },
-
     "neural_network_model": {
         "model_name": "faster-rcnn-resnet-50-fpn",
-        "number_epochs": 20,
+        "number_epochs": 300,
         "batch_size": 16,
         "resize_of_input_image": 300,
-        "threshold": 0.1,
+        "threshold": 0.4,
+        "iou_threshold": 0.5,
         "number_workers": 2,
         "classes": [
             "__background__", "Apothecium", "Imature Sclerotium", "Mature Sclerotium", "White Mold", "class 5", "class 6", "class 7", "class 8", "class 9", "class 10",
@@ -35,8 +35,7 @@
         "gamma": 0.1,
         "momentum": 0.9,
         "weight_decay": 0.0005,
-        "step_size": 3,
-        "iou_threshold": 0.01
+        "step_size": 3
     },
 
     "processing": {
@@ -47,7 +46,8 @@
         "image_dataset_folder": "defined during training/inference ",
         "image_dataset_folder_train": "defined during training/inference ",
         "image_dataset_folder_valid": "defined during training/inference ",
-        "image_dataset_folder_test": "defined during training/inference "
+        "image_dataset_folder_test": "defined during training/inference ",
+        "show_statistics_of_input_dataset": false
     },
 
     "training_results": {
@@ -64,16 +64,16 @@
         "log_filename": "wm-model-faster_rcnn-train"
     },
     
-    "inference_results": {
+    "test_results": {
         "main_folder": "white-mold-results",
-        "model_folder": "defined during training/inference",
-        "action_folder": "inference",
-        "running_folder": "defined during training/inference",
+        "model_folder": "defined during training/test",
+        "action_folder": "test",
+        "running_folder": "defined during training/test",
         "processing_parameters_folder": "processing-parameters",
         "weights_folder": "weights",
         "metrics_folder": "metrics",
-        "inferenced_image_folder": "inferenced-image",
+        "inferenced_image_folder": "tested-image",
         "log_folder": "log",
-        "log_filename": "wm-model-faster_rcnn-inference"
+        "log_filename": "wm-model-faster_rcnn-test"
     }
 }

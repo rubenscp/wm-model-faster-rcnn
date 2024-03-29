@@ -6,10 +6,9 @@ from xml.etree import ElementTree as et
 
 from augmentation import *
 import utils 
-# from utils import *
 
 # Importing python modules
-from manage_log import *
+from common.manage_log import *
 
 class WhiteMoldImagesDatasetFRCNN(torch.utils.data.Dataset):
 

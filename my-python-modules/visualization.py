@@ -3,14 +3,14 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 # Importing python modules
-from manage_log import *
+from common.manage_log import *
 
 # for visualization of images
 
 # Function to visualize bounding boxes in the image
 def plot_img_bbox(img, target, threshold=0.5, path_and_filename_image='', classes=None):
 
-    logging_info(f'plot_img_bbox - target: {target}')
+    # logging_info(f'plot_img_bbox - target: {target}')
     # Colors 
     # colors = [[0, 0, 0],        [255, 0, 0],        [0, 255, 0],    [0, 0, 255], 
     #           [238, 130, 238],  [106, 90, 205],     [188, 0, 239]]
@@ -29,7 +29,7 @@ def plot_img_bbox(img, target, threshold=0.5, path_and_filename_image='', classe
             scores = target["scores"].numpy()
             score = scores[ind_score]
             if score < threshold:
-                logging_info(f'score {score} less than threshold {threshold}')
+                # logging_info(f'score {score} less than threshold {threshold}')
                 continue
 
         x, y, width, height  = box[0], box[1], box[2]-box[0], box[3]-box[1]
@@ -50,8 +50,8 @@ def plot_img_bbox(img, target, threshold=0.5, path_and_filename_image='', classe
             # logging_info(f'scores: {scores}')
             labels = target['labels'].numpy()
             class_id = labels[ind_score]
-            logging_info(f'classes: {classes}')
-            logging_info(f'class_id: {class_id}   classes[class_id]: {classes[class_id]}')
+            # logging_info(f'classes: {classes}')
+            # logging_info(f'class_id: {class_id}   classes[class_id]: {classes[class_id]}')
             class_name = classes[class_id]
             class_color = colors[class_id]
             # label_text = 'aphot ' + '%.2f' % score

@@ -3,9 +3,12 @@ matplotlib
 pandas
 opencv-python
 torch
+torchmetrics
 torchvision
 pyarrow
 pycocotools
 albumentations
 lxml
 dict2xml
+seaborn
+openpyxl

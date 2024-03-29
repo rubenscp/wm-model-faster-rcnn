@@ -10,7 +10,7 @@ from coco_utils import get_coco_api_from_dataset
 
 
 # Importing python modules
-from manage_log import *
+from common.manage_log import *
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, scaler=None):
     model.train()

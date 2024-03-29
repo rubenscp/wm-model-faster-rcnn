@@ -9,7 +9,7 @@ import torch
 import torch.distributed as dist
 
 # Importing python modules
-from manage_log import *
+from common.manage_log import *
 
 class SmoothedValue:
     """Track a series of values and provide access to smoothed values over a
@@ -18,7 +18,7 @@ class SmoothedValue:
 
     def __init__(self, window_size=20, fmt=None):
         if fmt is None:
-            fmt = "{median:.4f} ({global_avg:.4f})"
+            fmt = "media:{median:.4f} (global_avg:{global_avg:.4f})"
         self.deque = deque(maxlen=window_size)
         self.total = 0.0
         self.count = 0
