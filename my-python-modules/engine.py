@@ -8,6 +8,7 @@ import utils
 from coco_eval import CocoEvaluator
 from coco_utils import get_coco_api_from_dataset
 
+from torchmetrics.detection.mean_ap import MeanAveragePrecision
 
 # Importing python modules
 from common.manage_log import *
@@ -91,22 +92,46 @@ def evaluate(model, data_loader, device):
     iou_types = _get_iou_types(model)
     coco_evaluator = CocoEvaluator(coco, iou_types)
 
+    # used for calculate the mAP (Rubens)
+    targets_map = []
+    preds_map = []
+
     for images, targets in metric_logger.log_every(data_loader, 100, header):
         images = list(img.to(device) for img in images)
 
         if torch.cuda.is_available():
             torch.cuda.synchronize()
         model_time = time.time()
-        outputs = model(images)
-
+        outputs = model(images)       
+        
         outputs = [{k: v.to(cpu_device) for k, v in t.items()} for t in outputs]
         model_time = time.time() - model_time
 
+        # logging_info(f"rubens after model.eval")
+        # logging_info(f"outputs: {outputs}")
+        # logging_info(f"target: {targets}")
+
         res = {target["image_id"]: output for target, output in zip(targets, outputs)}
+        
         evaluator_time = time.time()
         coco_evaluator.update(res)
         evaluator_time = time.time() - evaluator_time
         metric_logger.update(model_time=model_time, evaluator_time=evaluator_time)
+
+        #################################################
+        # For mAP calculation using Torchmetrics (Rubens)
+        #################################################
+        for i in range(len(images)):
+            true_dict = dict()
+            preds_dict = dict()
+            true_dict['boxes'] = targets[i]['boxes'].detach().cpu()
+            true_dict['labels'] = targets[i]['labels'].detach().cpu()
+            preds_dict['boxes'] = outputs[i]['boxes'].detach().cpu()
+            preds_dict['scores'] = outputs[i]['scores'].detach().cpu()
+            preds_dict['labels'] = outputs[i]['labels'].detach().cpu()
+            preds_map.append(preds_dict)
+            targets_map.append(true_dict)
+        #####################################
 
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
@@ -118,4 +143,11 @@ def evaluate(model, data_loader, device):
     coco_evaluator.accumulate()
     coco_evaluator.summarize()
     torch.set_num_threads(n_threads)
-    return coco_evaluator
+
+    # caluclate the mean average precision mAP of the validation dataset 
+    map_metric = MeanAveragePrecision()
+    map_metric.update(preds_map, targets_map)
+    map_metric_summary = map_metric.compute()
+    # logging_info(f'metric_summary: {metric_summary}')
+    
+    return coco_evaluator, map_metric_summary

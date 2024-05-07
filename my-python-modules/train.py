@@ -28,6 +28,10 @@ def training_model(parameters, model, device, data_loader_train, data_loader_val
 
     losses_per_epoch = []
     train_loss_list_excel = []
+    train_loss_list = []
+    map_list = []
+    map_50_list = []
+    map_75_list = []
 
     # training model 
     for epoch in range(parameters['neural_network_model']['number_epochs']):
@@ -43,6 +47,7 @@ def training_model(parameters, model, device, data_loader_train, data_loader_val
 
         losses_per_epoch.append(metric_logger_return.loss.median)
         train_loss_list_excel.append([epoch+1, metric_logger_return.loss.median])
+        train_loss_list.append(metric_logger_return.loss.median)
 
         logging_info(f'losses_per_epoch: {losses_per_epoch}')        
 
@@ -50,7 +55,12 @@ def training_model(parameters, model, device, data_loader_train, data_loader_val
         lr_scheduler.step()
 
         # evaluate on the test dataset
-        coco_evaluator_return = evaluate(model, data_loader_valid, device=device)
+        coco_evaluator_return, map_metric_summary = evaluate(model, data_loader_valid, device=device)
+
+        # creating mAP lists 
+        map_list.append(map_metric_summary['map'].item())
+        map_50_list.append((map_metric_summary['map_50']).item())
+        map_75_list.append((map_metric_summary['map_75']).item())
 
 
     # plot loss function for training
@@ -73,7 +83,31 @@ def training_model(parameters, model, device, data_loader_train, data_loader_val
     )
     logging_info(f'path_and_filename: {path_and_filename}')
 
-    Utils.save_losses(train_loss_list_excel, path_and_filename)          
+    Utils.save_losses(train_loss_list_excel, path_and_filename)
 
+    # saving loss and mAP to excel file
+    # logging_info(f'train_loss_list_excel final: {train_loss_list_excel}')    
+    path_and_filename = os.path.join(
+        parameters['training_results']['metrics_folder'],
+        parameters['neural_network_model']['model_name'] + '_train_loss_maps.xlsx'
+    )
+    logging_info(f'path_and_filename: {path_and_filename}')
+    logging_info(f'train_loss_list: {train_loss_list}')
+    logging_info(f'map_list: {map_list}')
+    logging_info(f'map_50_list: {map_50_list}')
+    logging_info(f'map_75_list: {map_75_list}')
+
+    Utils.save_losses_maps(train_loss_list,
+        map_list, map_50_list, map_75_list,
+        path_and_filename)
+
+    # Save mAP plot.
+    path_and_filename = os.path.join(
+        parameters['training_results']['metrics_folder'],
+        parameters['neural_network_model']['model_name'] + '_mAP.png'
+    )
+    title = f'Training mAP for model {parameters["neural_network_model"]["model_name"]}'
+    Utils.save_mAP_plot(path_and_filename, map_50_list, map_list, map_75_list, title)
+    
     # returning model trained
     return model

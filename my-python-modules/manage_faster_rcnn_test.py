@@ -106,7 +106,7 @@ def main():
 
     # setting output folder results
     processing_tasks.start_task('Setting result folders')
-    set_results_folder(parameters)
+    set_result_folders(parameters)
     processing_tasks.finish_task('Setting result folders')
     
     # creating log file 
@@ -129,7 +129,7 @@ def main():
     processing_tasks.start_task('Saving processing parameters')
     save_processing_parameters(parameters_filename, parameters)
     processing_tasks.finish_task('Saving processing parameters')
-  
+
     # copying weights file produced by training step 
     processing_tasks.start_task('Copying weigts file used in inference')
     copy_weights_file(parameters)
@@ -237,14 +237,18 @@ def get_running_id(parameters):
 
     # updating running id in the processing parameters 
     parameters['processing']['running_id'] = running_id
+    parameters['processing']['running_id_text'] = 'running-' + f'{running_id:04}'
 
     # returning the current running id
     return running_id
 
-def set_results_folder(parameters):
+def set_result_folders(parameters):
     '''
     Set folder name of output results
     '''
+
+    # resetting training results 
+    parameters['training_results'] = {}
 
     # creating results folders 
     main_folder = os.path.join(
@@ -263,9 +267,17 @@ def set_results_folder(parameters):
     parameters['test_results']['model_folder'] = model_folder
     Utils.create_directory(model_folder)
 
-    # setting and creating action folder
-    action_folder = os.path.join(
+    # setting and creating experiment folder
+    experiment_folder = os.path.join(
         model_folder,
+        parameters['input']['experiment']['id']
+    )
+    parameters['test_results']['experiment_folder'] = experiment_folder
+    Utils.create_directory(experiment_folder)
+
+    # setting and creating action folder of training
+    action_folder = os.path.join(
+        experiment_folder,
         parameters['test_results']['action_folder']
     )
     parameters['test_results']['action_folder'] = action_folder
@@ -406,7 +418,8 @@ def show_input_dataset_statistics(parameters, annotation_statistics):
     logging_info(annotation_statistics.to_string())
     path_and_filename = os.path.join(
         parameters['test_results']['metrics_folder'],
-        parameters['neural_network_model']['model_name'] + '_annotations_statistics.xlsx',
+        parameters['neural_network_model']['model_name'] + \
+        '_' + parameters['processing']['running_id_text'] + '_annotations_statistics.xlsx',
     )
     annotation_format = parameters['input']['input_dataset']['annotation_format']
     input_image_size = parameters['input']['input_dataset']['input_image_size']

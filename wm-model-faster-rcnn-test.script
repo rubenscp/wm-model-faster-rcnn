@@ -1,5 +1,5 @@
 #PBS -N frcnn_test 
-#PBS -q testegpu 
+#PBS -q miggpu24h 
 #PBS -m abe 
 #PBS -e frcnn_test_errors 
 #PBS -o frcnn_test_output 

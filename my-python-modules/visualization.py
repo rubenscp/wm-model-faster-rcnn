@@ -14,7 +14,7 @@ def plot_img_bbox(img, target, threshold=0.5, path_and_filename_image='', classe
     # Colors 
     # colors = [[0, 0, 0],        [255, 0, 0],        [0, 255, 0],    [0, 0, 255], 
     #           [238, 130, 238],  [106, 90, 205],     [188, 0, 239]]
-    colors = ['black', 'red', 'green', 'yellow', 'blue']
+    colors = ['black', 'red', 'green', 'yellow', 'blue', 'orange']
     
     # plot the image and bboxes
     # Bounding boxes are defined as follows: x-min y-min width height
