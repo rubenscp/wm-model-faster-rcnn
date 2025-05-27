@@ -62,3 +62,18 @@ def load_weigths_into_model(parameters, model):
 
     # setting weights into the model 
     model.load_state_dict(weights)
+
+
+# Function to count the number of parameters
+def count_parameters(model):
+    number_of_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)    
+    return number_of_parameters
+
+def count_layers(module):
+    if isinstance(module, (torch.nn.Conv2d, torch.nn.Linear)):
+        return 1
+    return 0
+
+def compute_num_layers(model):
+    num_layers = sum(count_layers(layer) for layer in model.modules())
+    return num_layers

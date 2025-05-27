@@ -157,9 +157,14 @@ def get_test_datasets_and_dataloaders_faster_rcnn(parameters):
     batch_size = parameters['neural_network_model']['batch_size']
     number_workers = parameters['neural_network_model']['number_workers']
 
+    if parameters['input']['input_dataset']['input_dataset_type'] == 'valid':
+        image_dataset_folder = parameters['processing']['image_dataset_folder_valid']
+    if parameters['input']['input_dataset']['input_dataset_type'] == 'test':
+        image_dataset_folder = parameters['processing']['image_dataset_folder_test'] 
+
     # use our dataset and defined transformations    
     dataset_test  = WhiteMoldImagesDatasetFRCNN(
-        parameters['processing']['image_dataset_folder_test'], 
+        image_dataset_folder, 
         width=width, height=height,
         classes=parameters['neural_network_model']['classes'],
         transforms= get_transform(train=False))

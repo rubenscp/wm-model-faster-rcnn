@@ -393,7 +393,13 @@ def get_neural_network_model_with_custom_weights(parameters, device):
        
     # loading weights into the model from training step
     load_weigths_into_model(parameters, model)
-    
+
+    number_of_parameters = count_parameters(model)
+    logging.info(f'Number of model parameters: {number_of_parameters}')    
+
+    num_layers = compute_num_layers(model)
+    logging_info(f'Number of layers: {num_layers}')
+  
     logging.info(f'Moving model to device: {device}')
     model = model.to(device)
 
@@ -408,7 +414,8 @@ def get_neural_network_model_with_custom_weights(parameters, device):
 def get_input_dataset_statistics(parameters):
     
     annotation_statistics = AnnotationsStatistic()
-    steps = ['test'] 
+    # steps = ['test'] 
+    steps = [parameters['input']['input_dataset']['input_dataset_type']]
     annotation_statistics.processing_statistics(parameters, steps)
     return annotation_statistics
     

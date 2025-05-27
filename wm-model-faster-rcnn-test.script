@@ -1,9 +1,16 @@
 #PBS -N frcnn_test 
-#PBS -q miggpu24h 
+#PBS -q testegpu
 #PBS -m abe 
 #PBS -e frcnn_test_errors 
 #PBS -o frcnn_test_output 
 
+unset CUDA_VISIBLE_DEVICES
+
+#### module load cuda/11.5.0-intel-2022.0.1
+
+### module load cuda/11.4.0-intel-2021.3.0
+### module load cuda/12.0.0-intel-2023.2.1	
+
 source ~/research/white-mold-applications/wm-model-faster-rcnn/venv-wm-model-faster-rcnn/bin/activate
-module load cuda/11.5.0-intel-2022.0.1
+module load cuda/11.5.0-intel-2019.0.5
 python ~/research/white-mold-applications/wm-model-faster-rcnn/my-python-modules/manage_faster_rcnn_test.py

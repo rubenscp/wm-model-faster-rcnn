@@ -1,2 +1,2 @@
 #!/bin/bash
-qstat testegpu miggpu miggpu24h duasgpus
+qstat testegpu miggpu miggpu24h duasgpus umagpu
